@@ -6,6 +6,6 @@ class squid::errors {
   }
 
   squid::conf {"error_directory":
-    changes => "set error_directory /etc/squid/errors"
+    ensure => "/etc/squid/errors"
   }
 }
