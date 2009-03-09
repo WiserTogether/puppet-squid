@@ -8,6 +8,7 @@ class squid {
     case $operatingsystem {
         gentoo: { include squid::gentoo }
         centos: { include squid::centos }
+        debian: { include squid::debian}
         default: { include squid::base }
     }
 
@@ -37,6 +38,12 @@ class squid::base {
                     "puppet://$server/squid/squid.conf" ],
         notify => Service[squid],
     }
+
+    # Up to date augeas lens
+    file {"/etc/squid/squid.aug":
+      ensure => present,
+      source => "puppet:///squid/squid.aug",
+    }
 }
 
 class squid::gentoo inherits squid::base {
@@ -54,4 +61,18 @@ class squid::centos inherits squid::base {
         notify => Service['squid'],
         owner => root, group => 0, mode => '0644';
     }
+}
+
+class squid::debian inherits squid::base {
+    File["squid_config"] {
+      source => undef
+    }
+}
+
+define squid::conf ($changes) {
+  augeas {$name:
+    context   => "/files/etc/squid/squid.conf",
+    load_path => "/etc/squid",
+    changes   => $changes
+  }
 }
