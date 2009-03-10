@@ -75,7 +75,8 @@ define squid::augeas ($changes, $onlyif = "") {
         load_path => "/etc/squid",
         changes   => $changes,
         onlyif    => $onlyif,
-        notify    => Service["squid"]
+        notify    => Service["squid"],
+        require   => [File["squid_config"], File["/etc/squid/squid.aug"]],
     }
 }
 
