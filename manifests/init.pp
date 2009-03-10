@@ -69,11 +69,12 @@ class squid::debian inherits squid::base {
     }
 }
 
-define squid::augeas ($changes) {
+define squid::augeas ($changes, $onlyif = "") {
     augeas {$name:
         context   => "/files/etc/squid/squid.conf",
         load_path => "/etc/squid",
         changes   => $changes,
+        onlyif    => $onlyif,
         notify    => Service["squid"]
     }
 }
@@ -86,44 +87,3 @@ define squid::conf ($ensure) {
         }
     }
 }
-
-define squid::acl ($ensure = present, $type = "", $setting = "") {
-    case $ensure {
-        absent: {
-            squid::conf {"acl/${name}":
-                ensure => absent,
-            }
-        }
-
-        default: {
-            squid::conf {"acl/${name}/type":
-                ensure => $type,
-            }
-
-            squid::conf {"acl/${name}/setting":
-                ensure => $setting,
-            }
-        }
-    }
-}
-
-define squid::http-access ($ensure = present, $policy = "", $setting = "") {
-    case $ensure {
-        absent: {
-            squid::conf {"http-access/${name}":
-                ensure => absent,
-            }
-        }
-
-        default: {
-            squid::conf {"http-access/${name}/${policy}":
-                ensure => $setting,
-            }
-
-            squid::conf {"http-access/${name}/#comment":
-                ensure => $name,
-            }
-        }
-    }
-}
-
