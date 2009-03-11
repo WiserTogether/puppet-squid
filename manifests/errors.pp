@@ -3,6 +3,7 @@ class squid::errors {
     ensure => directory,
     source => "puppet:///squid/errors",
     recurse => true,
+    require => Package["squid"],
   }
 
   squid::conf {"error_directory":
