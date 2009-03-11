@@ -37,6 +37,7 @@ class squid::base {
                     "puppet://$server/files/squid/squid.conf",
                     "puppet://$server/squid/squid.conf" ],
         notify => Service[squid],
+        require => Package["squid"],
     }
 
     # Up to date augeas lens
