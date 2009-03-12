@@ -3,6 +3,9 @@ class squid::errors {
     ensure => directory,
     source => "puppet:///squid/errors",
     recurse => true,
+    owner   => "root",
+    group   => "root",
+    mode    => 644,
     require => Package["squid"],
   }
 
