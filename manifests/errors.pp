@@ -1,7 +1,7 @@
 class squid::errors {
   file {"/etc/squid/errors":
     ensure => directory,
-    source => "puppet:///squid/errors",
+    source => "puppet:///modules/squid/errors",
     recurse => true,
     owner   => "root",
     group   => "root",

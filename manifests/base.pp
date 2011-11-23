@@ -23,6 +23,6 @@ class squid::base {
     # Up to date augeas lens
     file {"/etc/squid/squid.aug":
       ensure => present,
-      source => "puppet:///squid/squid.aug",
+      source => "puppet:///modules/squid/squid.aug",
     }
 }
