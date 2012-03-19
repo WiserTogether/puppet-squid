@@ -7,7 +7,7 @@
 class squid { 
     case $operatingsystem {
         gentoo: { include squid::gentoo }
-        centos: { include squid::centos }
+        centos,redhat: { include squid::centos }
         debian: { include squid::debian}
         default: { include squid::base }
     }

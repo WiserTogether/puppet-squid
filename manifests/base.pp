@@ -13,9 +13,7 @@ class squid::base {
     file {"squid_config":
         path => "/etc/squid/squid.conf",
         ensure => file, owner => root, group => root, mode => 644,
-        source => [ "puppet://$server/files/squid/${fqdn}/squid.conf",
-                    "puppet://$server/files/squid/squid.conf",
-                    "puppet://$server/squid/squid.conf" ],
+        source => [ "puppet:///modules/squid/squid.conf.default" ],
         notify => Service[squid],
         require => Package["squid"],
     }
